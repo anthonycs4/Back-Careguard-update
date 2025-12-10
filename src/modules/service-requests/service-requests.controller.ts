@@ -20,8 +20,8 @@ import { CreateChildrenPayloadDto } from './dto/create-children.dto';
 // Ajusta nombre segun tu DTO real
 import { CreatePetsPayloadDto } from './dto/create-pets.dto';
 
-import { GetAbiertasQueryDto } from './dto/get-abiertas.query.dto';
-import { GetMiasQueryDto } from './dto/get-mias.query.dto';
+import { GetAbiertasQueryDto } from './dto/get-open-requests.dto';
+import { GetMiasQueryDto } from './dto/get-my-requests.dto';
 
 @Controller('service-requests') // /api/service-requests
 @UseGuards(SupabaseAuthGuard)
