@@ -232,9 +232,10 @@ export class ServiceRequestsService {
   //          (migrado de tu createMascotas del controller)
   // ======================================================
   async createPets(
-    userId: string,
-    body: { base: CreateSolicitudBaseDto; payload: CreatePetsPayloadDto },
-  ) {
+  userId: string,
+  body: { base: CreateSolicitudBaseDto; payload: CreateMascotasPayloadDto },
+) {
+
     const { base, payload } = body;
 
     if (!payload?.animales?.length || payload.animales.length > 3) {
