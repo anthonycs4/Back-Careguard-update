@@ -13,15 +13,13 @@ import {
 } from '@nestjs/common';
 import { SupabaseAuthGuard } from '../../guards/supabase-auth.guard';
 import { ServiceRequestsService } from './service-requests.service';
-
 import { CreateSolicitudBaseDto } from './dto/create-base.dto';
 import { CreateGrandparentsPayloadDto } from './dto/create-grandparents.dto';
 import { CreateChildrenPayloadDto } from './dto/create-children.dto';
-// Ajusta nombre segun tu DTO real
-import { CreatePetsPayloadDto } from './dto/create-pets.dto';
-
+import { CreateMascotasPayloadDto } from './dto/create-pets.dto';
 import { GetAbiertasQueryDto } from './dto/get-open-requests.dto';
 import { GetMiasQueryDto } from './dto/get-my-requests.dto';
+
 
 @Controller('service-requests') // /api/service-requests
 @UseGuards(SupabaseAuthGuard)
