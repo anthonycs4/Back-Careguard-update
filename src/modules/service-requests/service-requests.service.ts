@@ -3,19 +3,10 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { SUPABASE_CLIENT } from '../../database/constants';
 
 import { CreateSolicitudBaseDto } from './dto/create-base.dto';
-import {
-  CreateGrandparentsPayloadDto,
-} from './dto/create-grandparents.dto';
-import {
-  CreateChildrenPayloadDto,
-} from './dto/create-children.dto';
-
-// Ajusta el nombre según tu archivo real (si aún se llama create-mascotas.dto)
-import {
-  CreatePetsPayloadDto,
-} from './dto/create-pets.dto';
-
-import { GetAbiertasQueryDto } from './dto/get-my-requests.dto';
+import { CreateGrandparentsPayloadDto } from './dto/create-grandparents.dto';
+import { CreateChildrenPayloadDto } from './dto/create-children.dto';
+import { CreateMascotasPayloadDto } from './dto/create-pets.dto';
+import { GetAbiertasQueryDto } from './dto/get-open-requests.dto';
 import { GetMiasQueryDto } from './dto/get-my-requests.dto';
 
 @Injectable()

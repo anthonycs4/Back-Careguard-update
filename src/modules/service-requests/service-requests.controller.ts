@@ -52,17 +52,17 @@ export class ServiceRequestsController {
     const userId = (req.userId ?? req.user?.id) as string;
     return this.serviceRequestsService.createChildren(userId, body);
   }
+// POST /api/service-requests/pets
+@Post('pets')
+async createPets(
+  @Req() req: any,
+  @Body()
+  body: { base: CreateSolicitudBaseDto; payload: CreateMascotasPayloadDto },
+) {
+  const userId = (req.userId ?? req.user?.id) as string;
+  return this.serviceRequestsService.createPets(userId, body);
+}
 
-  // POST /api/service-requests/pets  (antes /solicitudes/mascotas)
-  @Post('pets')
-  async createPets(
-    @Req() req: any,
-    @Body()
-    body: { base: CreateSolicitudBaseDto; payload: CreatePetsPayloadDto },
-  ) {
-    const userId = (req.userId ?? req.user?.id) as string;
-    return this.serviceRequestsService.createPets(userId, body);
-  }
 
   // GET /api/service-requests?type=ABUELOS|NINIOS|MASCOTAS
   // Equivale a tu antiguo GET /solicitudes
