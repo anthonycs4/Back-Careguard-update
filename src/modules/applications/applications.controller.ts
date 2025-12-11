@@ -20,6 +20,7 @@ import { ApplicationsService } from './applications.service';
 export class ApplicationsController {
   constructor(private readonly service: ApplicationsService) {}
 
+  // CREATE application
   @Post()
   @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
   async crear(@Req() req: any, @Body() dto: CreatePostulacionDto) {
@@ -28,8 +29,8 @@ export class ApplicationsController {
     return this.service.crear(userId, dto);
   }
 
-  // GET /postulaciones/solicitud/:id
-  @Get('solicitud/:id')
+  // GET applications by request ID
+  @Get('request/:id')
   @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
   async getBySolicitud(@Req() req: any, @Param('id') solicitudId: string) {
     const userId = (req.userId ?? req.user?.id) as string;
@@ -37,8 +38,8 @@ export class ApplicationsController {
     return this.service.getBySolicitud(userId, solicitudId);
   }
 
-  // ✅ Aceptar (match) una postulación con precio final
-  @Post(':postulacionId/aceptar')
+  // ACCEPT application (final match)
+  @Post(':postulacionId/accept')
   @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
   async aceptar(
     @Req() req: any,

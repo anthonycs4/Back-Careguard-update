@@ -10,6 +10,7 @@ export class ApplicationsService {
     @Inject(SUPABASE_CLIENT) private readonly supabase: SupabaseClient,
   ) {}
 
+  // CREATE application
   async crear(userId: string, dto: CreatePostulacionDto) {
     if (!dto.solicitud_id) {
       throw new BadRequestException('solicitud_id es requerido');
@@ -42,8 +43,9 @@ export class ApplicationsService {
     return { message: 'Postulación creada', postulacion: data };
   }
 
+  // GET applications of a request
   async getBySolicitud(userId: string, solicitudId: string) {
-    // 1. Verificar que la solicitud pertenece al usuario
+    // 1. Verificar que la solicitud pertenece al usuario autenticado
     const { data: solicitud, error: solError } = await this.supabase
       .from('solicitudes')
       .select('usuario_id')
@@ -59,7 +61,7 @@ export class ApplicationsService {
       );
     }
 
-    // 2. Obtener postulaciones
+    // 2. Obtener postulaciones ya estructuradas
     const { data, error } = await this.supabase
       .from('postulaciones')
       .select(
@@ -91,7 +93,6 @@ export class ApplicationsService {
       throw new BadRequestException(error.message);
     }
 
-    // Mapeo para simplificar estructura si es necesario, O devolver directo
     const mapped = data.map((p: any) => ({
       id: p.id,
       mensaje: p.mensaje,
@@ -114,6 +115,7 @@ export class ApplicationsService {
     };
   }
 
+  // ACCEPT application (match)
   async aceptar(
     actorId: string,
     postulacionId: string,
