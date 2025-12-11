@@ -46,26 +46,22 @@ export class ApplicationsService {
   // GET applications of a request
   async getBySolicitud(userId: string, solicitudId: string) {
     // 1. Verificar que la solicitud pertenece al usuario autenticado
-   const { data: solicitud, error: solError } = await this.supabase
-  .from('solicitudes')
-  .select('id, usuario_id')
-  .eq('id', solicitudId)
-  .single();
+    const { data: filas, error: solError } = await this.supabase
+      .from('solicitudes')
+      .select('id, usuario_id')
+      .eq('id', solicitudId);
 
-console.log('DEBUG solicitudId:', solicitudId);
-console.log('DEBUG solError:', solError);
-console.log('DEBUG solicitud:', solicitud);
+    if (solError) {
+      throw new BadRequestException(`Supabase error: ${solError.message}`);
+    }
 
-if (solError) {
-  // mientras debuggeas, devuelve el error real
-  throw new BadRequestException(`Supabase error: ${solError.message}`);
-}
+    const solicitud = filas?.[0];
 
-if (!solicitud) {
-  throw new BadRequestException(
-    'Solicitud no encontrada (0 filas: ID inexistente o en otra BD)',
-  );
-}
+    if (!solicitud) {
+      throw new BadRequestException(
+        'Solicitud no encontrada (0 filas: ID inexistente o en otra BD)',
+      );
+    }
 
     if (solicitud.usuario_id !== userId) {
       throw new BadRequestException(
@@ -105,7 +101,7 @@ if (!solicitud) {
       throw new BadRequestException(error.message);
     }
 
-    const mapped = data.map((p: any) => ({
+    const mapped = (data ?? []).map((p: any) => ({
       id: p.id,
       mensaje: p.mensaje,
       tarifa_propuesta: p.tarifa_propuesta,
