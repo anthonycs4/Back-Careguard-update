@@ -46,15 +46,27 @@ export class ApplicationsService {
   // GET applications of a request
   async getBySolicitud(userId: string, solicitudId: string) {
     // 1. Verificar que la solicitud pertenece al usuario autenticado
-    const { data: solicitud, error: solError } = await this.supabase
-      .from('solicitudes')
-      .select('usuario_id')
-      .eq('id', solicitudId)
-      .single();
+   const { data: solicitud, error: solError } = await this.supabase
+  .from('solicitudes')
+  .select('id, usuario_id')
+  .eq('id', solicitudId)
+  .single();
 
-    if (solError || !solicitud) {
-      throw new BadRequestException('Solicitud no encontrada');
-    }
+console.log('DEBUG solicitudId:', solicitudId);
+console.log('DEBUG solError:', solError);
+console.log('DEBUG solicitud:', solicitud);
+
+if (solError) {
+  // mientras debuggeas, devuelve el error real
+  throw new BadRequestException(`Supabase error: ${solError.message}`);
+}
+
+if (!solicitud) {
+  throw new BadRequestException(
+    'Solicitud no encontrada (0 filas: ID inexistente o en otra BD)',
+  );
+}
+
     if (solicitud.usuario_id !== userId) {
       throw new BadRequestException(
         'No puedes ver postulaciones de otra solicitud',
